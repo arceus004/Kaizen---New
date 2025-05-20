@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kaizen Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0; padding: 20px;
+    }
+    .container {
+      background: #fff;
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { margin-top: 0; font-size: 24px; }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .col {
+      flex: 1;
+      min-width: 200px;
+      margin-right: 20px;
+    }
+    .col-full { flex: 1 1 100%; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    .required { color: red; }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+    textarea { resize: vertical; min-height: 60px; }
+
+    .file-input {
+      margin-top: 6px;
+      font-size: 13px;
+    }
+    .radio-group {
+      margin-top: 6px;
+    }
+    .radio-group label {
+      font-weight: normal;
+      margin-right: 12px;
+    }
+    .extra-question {
+      margin-top: 8px;
+      display: none;
+    }
+
+    hr { border: none; border-bottom: 1px solid #ddd; margin: 24px 0; }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Kaizen Registration</h1>
+    <form action="https://formspree.io/f/xyzwvdoj" method="POST" enctype="multipart/form-data" onsubmit="return submitForm();">
+
+      <div class="row">
+        <div class="col">
+          <label for="date">Date: <span class="required">*</span></label>
+          <input type="date" name="date" id="date">
+        </div>
+        <div class="col">
+          <label for="dept">Department:</label>
+          <input type="text" name="department" id="dept">
+        </div>
+        <div class="col">
+          <label for="impact">Kaizen Impact: <span class="required">*</span></label>
+          <select name="impact" id="impact">
+            <option value="">Select Kaizen impact</option>
+            <option>Quality</option>
+            <option>Cost</option>
+            <option>Safety</option>
+            <option>Environment</option>
+            <option>Productivity</option>
+            <option>Human Experience</option>
+            <option>Time</option>
+            <option>5 S & Waste</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-full">
+          <label for="title">Kaizen Title: <span class="required">*</span>
+            <span style="font-weight:normal;font-size:12px;color:#555;">
+              (Should indicate improvement/reduction of the problem)
+            </span>
+          </label>
+          <input type="text" name="title" id="title">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="improvement">Improvement Parameter: <span class="required">*</span></label>
+          <input type="text" name="improvement" id="improvement">
+        </div>
+        <div class="col">
+          <label for="uom">UOM: <span class="required">*</span></label>
+          <input type="text" name="uom" id="uom">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="beforeValue">Before (Value): <span class="required">*</span></label>
+          <input type="number" name="beforeValue" id="beforeValue">
+        </div>
+        <div class="col">
+          <label for="afterValue">After (Value): <span class="required">*</span></label>
+          <input type="number" name="afterValue" id="afterValue">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="beforeSituation">Before (Situation): <span class="required">*</span></label>
+          <textarea name="beforeSituation" id="beforeSituation" placeholder="Describe before situation"></textarea>
+          <input type="file" name="beforeFile" class="file-input">
+        </div>
+        <div class="col">
+          <label for="afterSituation">After (Situation): <span class="required">*</span></label>
+          <textarea name="afterSituation" id="afterSituation" placeholder="Describe after situation"></textarea>
+          <input type="file" name="afterFile" class="file-input">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="rootCause">Root Cause Analysis: <span class="required">*</span></label>
+          <textarea name="rootCause" id="rootCause"></textarea>
+        </div>
+        <div class="col">
+          <label for="solution">Solution Implemented: <span class="required">*</span></label>
+          <textarea name="solution" id="solution"></textarea>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Horizontal Deployment -->
+      <div class="row">
+        <div class="col">
+          <label>Horizontal Deployment <span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="hdeploy" value="no" onclick="toggleExtra('hdeploy', false)"> No</label>
+            <label><input type="radio" name="hdeploy" value="yes" onclick="toggleExtra('hdeploy', true)"> Yes</label>
+          </div>
+          <div id="hdeploy-extra" class="extra-question">
+            <label for="hdeploySite">If yes, Site Name:</label>
+            <input type="text" name="hdeploySite" id="hdeploySite">
+          </div>
+        </div>
+
+        <!-- Standardization -->
+        <div class="col">
+          <label>Standardization <span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="standard" value="no" onclick="toggleExtra('standard', false)"> No</label>
+            <label><input type="radio" name="standard" value="yes" onclick="toggleExtra('standard', true)"> Yes</label>
+          </div>
+          <div id="standard-extra" class="extra-question">
+            <label for="standard-options">Select applicable method:</label>
+            <select name="standardMethod" id="standard-options" style="width: 100%; padding: 5px;">
+              <option value="">-- Select Method --</option>
+              <option value="OPL">OPL</option>
+              <option value="SOP">SOP</option>
+              <option value="SMP">SMP</option>
+              <option value="FMEA">FMEA</option>
+              <option value="CHECKLIST">CHECKLIST</option>
+            </select>
+            <label for="revisionNumber" style="margin-top: 10px;">Revision Number:</label>
+            <input type="text" name="revisionNumber" id="revisionNumber">
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:30px;">
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleExtra(section, show) {
+      document.getElementById(section + '-extra').style.display = show ? 'block' : 'none';
+    }
+
+    function submitForm() {
+      const requiredIds = [
+        'date', 'impact', 'title', 'improvement', 'uom',
+        'beforeValue', 'afterValue',
+        'beforeSituation', 'afterSituation',
+        'rootCause', 'solution'
+      ];
+
+      let missingFields = [];
+
+      requiredIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.offsetParent !== null && el.value.trim() === '') {
+          const label = el.previousElementSibling?.innerText?.replace('*', '').trim() || id;
+          missingFields.push(label);
+        }
+      });
+
+      if (!document.querySelector('input[name="hdeploy"]:checked')) {
+        missingFields.push('Horizontal Deployment');
+      }
+      if (!document.querySelector('input[name="standard"]:checked')) {
+        missingFields.push('Standardization');
+      }
+
+      if (missingFields.length > 0) {
+        alert('Please fill in all required fields:\n- ' + missingFields.join('\n- '));
+        return false;
+      }
+
+      return true; // Allow form to submit
+    }
+  </script>
+</body>
+</html>
